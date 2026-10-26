@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.home-page-layout {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+}
+
+.home-page-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-layout {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+}
+
+.quiz-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-results {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 500px;
+  height: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option-container input {
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #e0f7fa;
+  border-color: #00bcd4;
+}
+
+.option-container label {
+  display: block;
+  padding: 12px;
+  border: solid;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
