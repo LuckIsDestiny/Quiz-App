@@ -19,6 +19,7 @@ model User {
   password  String
   role      Role      @default(USER)
   attempts  Attempt[]
+  quiz      Quiz[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -41,6 +42,9 @@ model Quiz {
   description String?
   questions   Question[]
   attempts    Attempt[]
+  creatorId   String
+  creator     User       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  isPublic    Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
