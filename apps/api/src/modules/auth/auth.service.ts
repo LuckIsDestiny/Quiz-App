@@ -16,11 +16,11 @@ export const register = async (data: RegisterSchema) => {
 export const login = async (data: LoginSchema) => {
   const user = await prisma.user.findUnique({ where: { email: data.email } });
   if (!user) {
-    throw new AppError("Invalid email or password", 400);
+    throw new AppError("Invalid email or password", 401);
   }
   const isValid = await bcrypt.compare(data.password, user.password);
   if (!isValid) {
-    throw new AppError("Invalid email or password", 400);
+    throw new AppError("Invalid email or password", 401);
   }
   const jwtPayload = { id: user.id, role: user.role };
   const jwtToken = jwt.sign(jwtPayload, env.JWT_SECRET, {
@@ -28,4 +28,11 @@ export const login = async (data: LoginSchema) => {
   } as SignOptions);
   const { password, ...userWithoutPassword } = user;
   return { user: userWithoutPassword, token: jwtToken };
+};
+
+export const getMe = async (userId: string) => {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    omit: { password: true },
+  });
 };

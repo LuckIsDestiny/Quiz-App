@@ -5,50 +5,72 @@ import {
   createQuestionSchema,
   createQuizSchema,
   submitAttemptSchema,
+  updateQuestionSchema,
   updateQuizSchema,
 } from "./quiz.validation.js";
-// import * as quizController from "./quiz.controller.js";
+import * as quizController from "./quiz.controller.js";
 import { authorize } from "../../middlewares/authorize.js";
 
 const router: Router = express.Router();
 
-// router.get("/", quizController.getQuizzes);
-// router.get("/:id", quizController.getQuizById);
+router.get("/", quizController.getQuizzes);
+router.get("/:quizId", quizController.getQuizById);
 
 router.use(requireAuth);
 
 router.post(
-  "/:id/attempts",
+  "/:quizId/attempts",
   validate(submitAttemptSchema),
   authorize("USER", "ADMIN"),
-  //   quizController.submitAttempt,
+  quizController.submitAttempt,
+);
+
+router.get(
+  "/:quizId/attempts",
+  authorize("USER", "ADMIN"),
+  quizController.getMyAttemptsForQuiz,
+);
+
+router.get(
+  "/:quizId/attempts/:attemptId",
+  authorize("USER", "ADMIN"),
+  quizController.getMyAttemptByIdForQuiz,
 );
 
 router.post(
   "/",
   validate(createQuizSchema),
   authorize("ADMIN"),
-  //   quizController.createQuiz,
+  quizController.createQuiz,
 );
 
 router.patch(
-  "/:id",
+  "/:quizId",
   validate(updateQuizSchema),
   authorize("ADMIN"),
-  //   quizController.updateQuiz,
+  quizController.updateQuiz,
+);
+
+router.delete("/:quizId", authorize("ADMIN"), quizController.deleteQuiz);
+
+router.post(
+  "/:quizId/questions",
+  validate(createQuestionSchema),
+  authorize("ADMIN"),
+  quizController.addQuestionToQuiz,
+);
+
+router.patch(
+  "/:quizId/questions/:questionId",
+  validate(updateQuestionSchema),
+  authorize("ADMIN"),
+  quizController.updateQuestionFromQuiz,
 );
 
 router.delete(
-  "/:id",
+  "/:quizId/questions/:questionId",
   authorize("ADMIN"),
-  //   quizController.deleteQuiz,
-);
-
-router.post(
-  "/:id/questions",
-  validate(createQuestionSchema),
-  authorize("ADMIN"),
-  //   quizController.addQuestionToQuiz,
+  quizController.deleteQuestionFromQuiz,
 );
 
 export default router;
